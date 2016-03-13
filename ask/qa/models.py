@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -7,11 +8,11 @@ class Question(models.Model):
 	text = models.CharField(max_length=1000)
 	addet_at = models.DateTimeField()
 	rating = models.IntegerField(default=0)
-	author = models..ForeignKey(models.User)
+	author = models.ForeignKey(User)
 	likes = models.IntegerField(default=0)
 
 class Answer(models.Model):
 	text = models.CharField(max_length=1000)
 	addet_at = models.DateTimeField()
 	question = models.ForeignKey(Question, on_delete=models.CASCADE)
-	author= models..ForeignKey(models.User)
+	author= models.ForeignKey(User)
