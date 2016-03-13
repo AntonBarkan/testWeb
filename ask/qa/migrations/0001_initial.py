@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('text', models.CharField(max_length=1000)),
                 ('addet_at', models.DateTimeField()),
                 ('rating', models.IntegerField(default=0)),
-                ('likes', models.IntegerField(default=0)),
+                ('likes', models.CharField(max_length=1000)),
                 ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
