@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import django.db.models.deletion
 from django.conf import settings
 
 
@@ -18,7 +19,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('text', models.CharField(max_length=1000)),
                 ('addet_at', models.DateTimeField()),
-                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
             },
@@ -33,7 +34,7 @@ class Migration(migrations.Migration):
                 ('addet_at', models.DateTimeField()),
                 ('rating', models.IntegerField(default=0)),
                 ('likes', models.IntegerField(default=0)),
-                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
             },
@@ -42,7 +43,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='answer',
             name='question',
-            field=models.ForeignKey(to='qa.Question'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='qa.Question', null=True),
             preserve_default=True,
         ),
     ]

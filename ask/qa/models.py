@@ -8,11 +8,11 @@ class Question(models.Model):
 	text = models.CharField(max_length=1000)
 	addet_at = models.DateTimeField()
 	rating = models.IntegerField(default=0)
-	author = models.ForeignKey(User)
+	author = models.ForeignKey(User, null=True)
 	likes = models.IntegerField(default=0)
 
 class Answer(models.Model):
 	text = models.CharField(max_length=1000)
 	addet_at = models.DateTimeField()
-	question = models.ForeignKey(Question, on_delete=models.CASCADE)
-	author= models.ForeignKey(User)
+	question = models.ForeignKey(Question, null=True, on_delete=models.SET_NULL)
+	author= models.ForeignKey(User, null=True)
