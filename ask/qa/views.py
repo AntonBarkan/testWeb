@@ -9,7 +9,7 @@ def test(request, *args, **kwargs):
 
 
 def all_q(request, *args, **kwargs):
-	questions = Question.objects.all()
+	questions = Question.objects.all().order_by("-addet_at")
 	page = request.GET.get('page', 1)
 	paginator = Paginator(questions, request.GET.get('limit', 10))
 	page = paginator.page(page)	
@@ -39,7 +39,7 @@ def question(request, id):
 		raise Http404(request)
 	strin = ""
 	for i in question.answer_set.all():
-		strin += i.text 
+		strin += str(i.text)
 	return HttpResponse(question.title + " " + question.text + " " + strin)
 
 
