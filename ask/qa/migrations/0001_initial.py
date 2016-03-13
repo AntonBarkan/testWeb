@@ -17,8 +17,8 @@ class Migration(migrations.Migration):
             name='Answer',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('text', models.CharField(max_length=1000)),
-                ('addet_at', models.DateTimeField()),
+                ('text', models.CharField(max_length=1000, null=True)),
+                ('addet_at', models.DateTimeField(null=True)),
                 ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
@@ -29,11 +29,11 @@ class Migration(migrations.Migration):
             name='Question',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=250)),
-                ('text', models.CharField(max_length=1000)),
-                ('addet_at', models.DateTimeField()),
+                ('title', models.CharField(max_length=250, null=True)),
+                ('text', models.CharField(max_length=1000, null=True)),
+                ('addet_at', models.DateTimeField(null=True)),
                 ('rating', models.IntegerField(default=0)),
-                ('likes', models.CharField(max_length=1000)),
+                ('likes', models.CharField(max_length=1000, null=True)),
                 ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
