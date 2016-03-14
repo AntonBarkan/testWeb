@@ -85,9 +85,10 @@ def login(request):
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		s = form["username"].value()
+		p = form["username"].value()
 		print(s)
 		try:
-			request.user = User.objects.get(username=s)
+			request.user = User.objects.get(username=s, password=p)
 		except ObjectDoesNotExist:
 			raise Http404(request)
 		
