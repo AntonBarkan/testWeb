@@ -10,6 +10,9 @@ class Question(models.Model):
 	rating = models.IntegerField(default=0)
 	author = models.ForeignKey(User, null=True)
 	likes = models.CharField(max_length=1000, null=True)
+	
+	def __unicode__(self):
+		return self.title
 
 class Answer(models.Model):
 	text = models.CharField(max_length=1000,null=True)

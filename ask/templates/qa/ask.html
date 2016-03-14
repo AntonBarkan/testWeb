@@ -1,0 +1,5 @@
+<form method="POST" action="/ask/">
+{% csrf_token %}
+{{form.as_ul}}
+<input type="submit">
+</form>

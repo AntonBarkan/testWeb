@@ -1,0 +1,13 @@
+<p>{{title}}</p><br>
+{{text}} <br>
+{% for p in ans %}
+	{{ p.text }}<br/>
+{% endfor %}
+
+
+
+<form method="POST" action="/answer/">
+{% csrf_token %}
+{{form.as_ul}}
+<input type="submit">
+</form>
