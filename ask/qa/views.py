@@ -3,7 +3,8 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from qa.models import Question, Answer
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
-from qa.forms import AskForm, AnswerForm
+from qa.forms import AskForm, AnswerForm, UserForm, LoginForm
+from django.contrib.auth.models import User
 
 def test(request, *args, **kwargs):
 	return HttpResponse('OK')
@@ -36,7 +37,10 @@ def popular(request, *args, **kwargs):
 def answer(request):
 	if request.method == 'POST':
 		form = AnswerForm(request.POST)
+		q.author = reques.user
 		q = form.save()
+		q.author = reques.user
+		q.save()
 		return HttpResponseRedirect('/question/' + str(q.question_id))
 	#return render(request, "qa/ask.html", {
 	#	"form":form
@@ -61,10 +65,37 @@ def ask(request):
 	if request.method == 'POST':
 		form = AskForm(request.POST)
 		q = form.save()
+		q.author = reques.user
+		q.save()
 		return HttpResponseRedirect('/question/' + str(q.id))
 	else:
 		form = AskForm()
 	return render(request, "qa/ask.html" , {'form': form})
+
+def signup(request):
+	if request.method == 'POST':
+		form = UserForm(request.POST)
+		q = form.save()
+		return HttpResponseRedirect('/')
+	else:
+		form = UserForm()
+	return render(request, "qa/signup.html" , {'form': form})
+
+def login(request):
+	if request.method == 'POST':
+		form = LoginForm(request.POST)
+		s = form["username"].value()
+		print(s)
+		try:
+			request.user = User.objects.get(username=s)
+		except ObjectDoesNotExist:
+			raise Http404(request)
+		
+		return HttpResponseRedirect('/')
+	else:
+		form = LoginForm()
+	return render(request, "qa/login.html" , {'form': form})
+	
 
 
 
