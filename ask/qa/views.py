@@ -87,7 +87,6 @@ def signup(request):
 		print(q)
 		login(request, q)
 		r = HttpResponseRedirect('/')
-		r.set_cookie("sessionid", q.username, max_age=1000)
 		return r
 	else:
 		form = UserForm()
@@ -100,7 +99,9 @@ def log(request):
 		p = form["password"].value()
 		print(s)
 		try:
-			request.user = User.objects.get(username=s, password=p)
+			q = authenticate(username=u.username, password=p)
+			print(q)
+			login(request, q)
 		except ObjectDoesNotExist:
 			raise Http404(request)
 		
