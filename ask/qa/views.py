@@ -67,6 +67,7 @@ def ask(request):
 		q = form.save()
 		q.author = reques.user
 		q.save()
+		login(request, q)
 		return HttpResponseRedirect('/question/' + str(q.id))
 	else:
 		form = AskForm()
