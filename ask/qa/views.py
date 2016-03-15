@@ -63,6 +63,7 @@ def question(request, id):
 	
 
 def ask(request):
+	print("is : " + str(request.user.is_authenticated()))
 	if request.method == 'POST':
 		form = AskForm(request.POST)
 		q = form.save()
@@ -84,9 +85,9 @@ def signup(request):
 		u.save()
 		q = authenticate(username=u.username, password=p)
 		print(q)
-		ll(request, q)
+		login(request, q)
 		r = HttpResponseRedirect('/')
-		r.set_cookie("session", q.username, max_age=1000)
+		r.set_cookie("sessionid", q.username, max_age=1000)
 		return r
 	else:
 		form = UserForm()
