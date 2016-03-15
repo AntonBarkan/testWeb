@@ -14,10 +14,10 @@ class AnswerForm(ModelForm):
 		model = Answer
 		fields = ['text', 'question']
 
-class UserForm(ModelForm):
-	class Meta:
-		model = User
-		fields = ['username', 'email', 'password']
+class UserForm(forms.Form):
+	username = forms.CharField()
+	email = forms.CharField()
+	password = forms.CharField()
 
 class LoginForm(forms.Form):
 	username = forms.CharField()

@@ -5,6 +5,8 @@ from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
 from qa.forms import AskForm, AnswerForm, UserForm, LoginForm
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as ll
 
 def test(request, *args, **kwargs):
 	return HttpResponse('OK')
@@ -67,7 +69,6 @@ def ask(request):
 		q = form.save()
 		q.author = reques.user
 		q.save()
-		login(request, q)
 		return HttpResponseRedirect('/question/' + str(q.id))
 	else:
 		form = AskForm()
@@ -76,8 +77,16 @@ def ask(request):
 def signup(request):
 	if request.method == 'POST':
 		form = UserForm(request.POST)
-		q = form.save()
-		return HttpResponseRedirect('/')
+		s = form["username"].value()
+		p = form["password"].value()
+		u = User.objects.create_user(s,"ss",p)
+		u.save()
+		q = authenticate(username=u.username, password=p)
+		print(q)
+		ll(request, q)
+		r = HttpResponseRedirect('/')
+		r.set_cookie("user", q.username, max_age=1000)
+		return r
 	else:
 		form = UserForm()
 	return render(request, "qa/signup.html" , {'form': form})
@@ -86,7 +95,7 @@ def login(request):
 	if request.method == 'POST':
 		form = LoginForm(request.POST)
 		s = form["username"].value()
-		p = form["username"].value()
+		p = form["password"].value()
 		print(s)
 		try:
 			request.user = User.objects.get(username=s, password=p)
