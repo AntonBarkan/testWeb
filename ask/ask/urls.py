@@ -3,7 +3,7 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
 	
-    url(r'^login/', 'qa.views.login'),
+    url(r'^log/', 'qa.views.login'),
     url(r'^signup/', 'qa.views.signup'),
     url(r'^question/(?P<id>[^/]+)/', 'qa.views.question'),
     url(r'^ask/', 'qa.views.ask'),
